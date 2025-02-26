@@ -72,6 +72,7 @@ spec:
           volumeMounts:
             - mountPath: /data/{{ include "samba.configFileName" . }}
               name: {{ include "samba.configFileName" . | replace "." "-"}}
+              subPath: {{ include "samba.configFileName" . }}
               readOnly: true
             - mountPath: /data
               name: data-dir
