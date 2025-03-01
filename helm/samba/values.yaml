@@ -19,24 +19,6 @@ image:
   # See: https://kubernetes.io/docs/concepts/containers/images/#imagepullpolicy-defaulting
   # pullPolicy:
 
-# -- The labels attached to the pod.
-# podLabels:
-
-# -- The annotations attached to the pod.
-# podAnnotations:
-
-# -- Configure imagePullSecret if you are using private registry
-# See: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-# imagePullSecrets:
-
-# -- Set podSecurityContext for the samba POD
-# See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-# podSecurityContext:
-
-# -- Set securityContext for the sambe CONTAINER
-# See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-# securityContext:
-
 # -- The ports used to access the samba server.
 # It is possible to configure multiple ports: https://github.com/crazy-max/docker-samba?tab=readme-ov-file#ports
 ports:
@@ -48,55 +30,78 @@ ports:
 service:
   enabled: false
 
-# -- Configure health of the pod by defining live- and readinessProbes.
-# -- Checks whether the Samba service is still running by connecting to localhost with smbclient.
-livenessProbe:
-  exec:
-    command:
-      - smbclient
-      - -L
-      - \\localhost
-      - -U
-      - "%"
-      - -m
-      - SMB3
-  initialDelaySeconds: 10
-  periodSeconds: 30
-  timeoutSeconds: 5
-  failureThreshold: 3
+# -- statefulset configuration
+statefulSet:
+  # -- Set labels to statefulset
+  # labels:
 
-# -- Uses smbstatus to check whether Samba is active and can accept clients.
-readinessProbe:
-  exec:
-    command:
-      - smbstatus
-  initialDelaySeconds: 5
-  periodSeconds: 10
-  timeoutSeconds: 3
-  failureThreshold: 3
+  # -- The labels attached to the pod.
+  # podLabels:
 
-# -- Define the resources of the samba pod.
-# See: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-# Example below.
-resources:
-  requests:
-    memory: "64Mi"
-    cpu: "250m"
-  # limits:
-  #   memory: "128Mi"
-  #   cpu: "500m"
+  # -- The annotations attached to the pod.
+  # podAnnotations:
 
-# -- Select node. Important if you have some local storage.
-# See: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
-# nodeSelector:
+  # -- Configure imagePullSecret if you are using private registry
+  # See: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  # imagePullSecrets:
 
-# -- Another way to assign the pod to a specific node
-# See: https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/
-# affinity:
+  # -- Set podSecurityContext for the samba POD
+  # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  # podSecurityContext:
 
-# -- Support for tolerations
-# See: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
-# tolerations:
+  # -- Set securityContext for the sambe CONTAINER
+  # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  # securityContext:
+
+  # -- Configure health of the pod by defining live- and readinessProbes.
+  # -- Checks whether the Samba service is still running by connecting to localhost with smbclient.
+  livenessProbe:
+    exec:
+      command:
+        - smbclient
+        - -L
+        - \\localhost
+        - -U
+        - "%"
+        - -m
+        - SMB3
+    initialDelaySeconds: 10
+    periodSeconds: 30
+    timeoutSeconds: 5
+    failureThreshold: 3
+
+  # -- Uses smbstatus to check whether Samba is active and can accept clients.
+  readinessProbe:
+    exec:
+      command:
+        - smbstatus
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 3
+    failureThreshold: 3
+
+  # -- Define the resources of the samba pod.
+  # See: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  # Example below.
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "250m"
+    # limits:
+    #   memory: "128Mi"
+    #   cpu: "500m"
+
+  # -- Select node. Important if you have some local storage.
+  # See: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+  # nodeSelector:
+
+  # -- Another way to assign the pod to a specific node
+  # See: https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/
+  # affinity:
+
+  # -- Support for tolerations
+  # See: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+  # tolerations:
 
 # -- The storage configuration for the samba server data directory.
 storage:

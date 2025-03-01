@@ -1,10 +1,13 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: statefulSet
 metadata:
   name: {{ include "samba.fullname" . }}
   namespace: {{ include "samba.namespace" . }}
   labels:
     {{- include "samba.labels" . | nindent 4 }}
+    {{- with .Values.statefulSet.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   replicas: 1
   selector:
@@ -12,27 +15,27 @@ spec:
       {{- include "samba.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
+      {{- with .Values.statefulSet.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
         {{- include "samba.labels" . | nindent 8 }}
-        {{- with .Values.podLabels }}
+        {{- with .Values.statefulSet.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- with .Values.statefulSet.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.podSecurityContext }}
+      {{- with .Values.statefulSet.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
         - name: {{ include "samba.name" . }}
-          {{- with .Values.securityContext }}
+          {{- with .Values.statefulSet.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -57,15 +60,15 @@ spec:
                   key: password
           {{- end }}
           {{- end }}
-          {{- with .Values.livenessProbe }}
+          {{- with .Values.statefulSet.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.readinessProbe }}
+          {{- with .Values.statefulSet.readinessProbe }}
           readinessProbe:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.resources }}
+          {{- with .Values.statefulSet.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -99,15 +102,15 @@ spec:
           claimName: {{ include "samba.name" $ }}-{{ .name }}
       {{- end }}
       {{- end }}
-      {{- with .Values.nodeSelector }}
+      {{- with .Values.statefulSet.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
+      {{- with .Values.statefulSet.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.tolerations }}
+      {{- with .Values.statefulSet.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
