@@ -52,9 +52,9 @@ spec:
           {{- end }}
           {{- end }}
           {{- if .Values.auth }}
-          {{- range .Values.auth }}
           env:
-            - name: {{ .user | upper }}-PASSWORD
+          {{- range .Values.auth }}
+            - name: {{ .user | upper }}-USER-PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: samba-user-{{ .user }}-password
