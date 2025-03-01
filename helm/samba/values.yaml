@@ -123,7 +123,7 @@ envs:
 # to check it into your git repository.
 auth:
   # - user: backup
-  #   password: ${BACKUP-USER-PASSWORD}
+  #   password: ${BACKUP_USER_PASSWORD}
   #   uid: 1001
   #   gid: 1001
   #   group: samba_users

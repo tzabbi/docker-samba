@@ -54,7 +54,7 @@ spec:
           {{- if .Values.auth }}
           env:
           {{- range .Values.auth }}
-            - name: {{ .user | upper }}-USER-PASSWORD
+            - name: {{ .user | upper }}_USER_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: samba-user-{{ .user }}-password
