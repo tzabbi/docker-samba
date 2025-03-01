@@ -25,6 +25,7 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
+      serviceAccountName: {{ include "samba.fullname" . }}
       {{- with .Values.statefulSet.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
