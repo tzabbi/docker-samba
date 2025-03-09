@@ -8,6 +8,10 @@ metadata:
     {{- with .Values.statefulSet.labels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
+  annotations:
+    {{- with .Values.statefulSet.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   replicas: 1
   selector:

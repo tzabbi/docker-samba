@@ -35,6 +35,9 @@ statefulSet:
   # -- Set labels to statefulset
   # labels:
 
+  # -- Set annotations to statefulset
+  # annotations:
+
   # -- The labels attached to the pod.
   # podLabels:
 
