@@ -51,12 +51,12 @@ statefulSet:
   # -- Set podSecurityContext for the samba POD
   # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
   # podSecurityContext:
+  #   fsGroup: 1001
 
   # -- Set securityContext for the sambe CONTAINER
   # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
   # Group of the samba users specified in the auth section
   # securityContext:
-  #   fsGroup: 1001
 
   # -- Configure health of the pod by defining live- and readinessProbes.
   # -- Checks whether the Samba service is still running by connecting to localhost with smbclient.
