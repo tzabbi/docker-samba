@@ -7,6 +7,7 @@ metadata:
   {{- include "samba.labels" . | nindent 4 }}
 data:
   {{ include "samba.configFileName" .}}: |
+    {{- if .Values.auth }}
     auth:
     {{- range $.Values.auth }}
     - user: {{ .user }}
@@ -14,6 +15,7 @@ data:
       uid: {{ .uid }}
       gid: {{ .gid }}
       password: {{ .password }}
+    {{- end }}
     {{- end }}
     {{- if .Values.share }}
     share:
@@ -30,8 +32,10 @@ data:
         {{- end }}
       {{- end }}
     {{- end }}
+    {{- if .Values.gloal}}
     global:
-    {{- range $.Values.global }}
+    {{- range .Values.global }}
     - {{ . -}}
-    {{ end }}
-    {{ end }}
+    {{- end }}
+    {{- end }}
+    {{- end }}
