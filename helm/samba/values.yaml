@@ -51,7 +51,6 @@ statefulSet:
   # -- Set podSecurityContext for the samba POD
   # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
   # podSecurityContext:
-  #   fsGroup: 1001
 
   # -- Set securityContext for the sambe CONTAINER
   # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
@@ -126,6 +125,7 @@ envs:
 # By default it uses the environment variable which will read by a secret called samba-user-{{ .user }}-password.
 # You have to create this secret manually. It is recommended to use something like sealed secrets to encrypt you secrets and be able
 # to check it into your git repository.
+# IMPORTANT: use the group name samba_users!!! This name is hardcoded in the init container to fix permission management!
 auth:
   # - user: backup
   #   password: ${BACKUP_USER_PASSWORD}
