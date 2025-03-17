@@ -42,7 +42,7 @@ spec:
       initContainers:
         - name: set-share-permissions
           image: busybox:latest
-          command: ["sh","-c","chown :samba_users /mnt/* && chmod 770 /mnt/*"]
+          command: ["sh","-c","chown :1001 /mnt/* && chmod 770 /mnt/*"]
           resources:
             limits:
               cpu: "64m"
